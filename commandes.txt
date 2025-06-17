@@ -1,1 +1,1 @@
-../llama-server.exe -m model/Qwen3.gguf -c 5000 -ngl 99
+../llama-server.exe -m poke-llm/model/Qwen3.gguf -c 5000 -ngl 99

@@ -6,13 +6,32 @@ load_dotenv()
 
 client = OpenAI(
     api_key='meow',
-    base_url='https://localhost:8080/'
+    base_url='http://localhost:8080/'
 )
 
 prompt = [
     {
         "role": "system",
-        "content": "You are a helpful assistant that answers questions about Pokemon."
+        "content": """
+        <no_think> You are a helpful assistant that answers questions about Pokemon. You can only anwswer questions in a specific JSON format.
+        If you want to input what you want to say, you must use the "say" field.
+        You have access to a pokemon API that you can use to answer questions better. To use it, use the "api" field.
+
+        Here is how the "api" field works:
+        {
+            "api":
+                "pokemon": "name of the pokemon",
+                "fields": ["field1", "field2", ...]
+        }
+
+        The "fields" array can contain any of the following fields:
+        - "name": The name of the pokemon
+        - "type": The type of the pokemon
+        - "abilities": The abilities of the pokemon
+        - "stats": The stats of the pokemon
+        - "evolutions": The evolutions of the pokemon
+        
+        """
     }
 ]
 
@@ -28,9 +47,11 @@ def loop():
     # Add the user input to the prompt
     prompt.append({"role": "user", "content": input_text})
 
+    print(prompt)
+
     # Call the OpenAI API to get a response
     streamedResponse = client.chat.completions.create(
-        model="qwen",
+        model="Qwen3",
         messages=prompt,
         stream=True
     )
