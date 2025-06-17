@@ -1,0 +1,5 @@
+openai
+opgg.py
+aiohttp==3.11.11
+fake-useragent==2.0.3
+pydantic==2.10.6
