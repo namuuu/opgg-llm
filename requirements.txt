@@ -1,1 +1,3 @@
 pokebase
+openai
+dotenv

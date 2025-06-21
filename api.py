@@ -1,5 +1,7 @@
 import pokebase as pb
 
+
+
 def get_pokemon_summary(pokemon_name):
     try:
         pokemon = pb.pokemon(pokemon_name)
@@ -52,9 +54,34 @@ def get_pokemon_stats(pokemon_name):
     except Exception as e:
         return {"error": str(e)}
     
-def test_api():
-    print(get_pokemon_summary("pikachu"))
-    print(get_pokemon_abilities("pikachu"))
-    print(get_pokemon_evolution_chain("pikachu"))
-    print(get_pokemon_moves("pikachu"))
-    print(get_pokemon_stats("pikachu"))
+def call_pokemon_api(pokemon_list, fields):
+    """
+    Fetches data for a list of Pokemon with specified fields.
+    
+    Args:
+        pokemon_list (list): List of Pokemon names.
+        fields (list): List of fields to fetch for each Pokemon.
+        
+    Returns:
+        dict: A dictionary containing the requested data for each Pokemon.
+    """
+    results = {}
+    for pokemon_name in pokemon_list:
+        results[pokemon_name] = {}
+        if "name" in fields or "type" in fields or "summary" in fields:
+            results[pokemon_name] = get_pokemon_summary(pokemon_name)
+        if "abilities" in fields:
+            results[pokemon_name]["abilities"] = get_pokemon_abilities(pokemon_name)
+        if "evolutions" in fields:
+            results[pokemon_name]["evolution_chain"] = get_pokemon_evolution_chain(pokemon_name)
+        if "moves" in fields:
+            results[pokemon_name]["moves"] = get_pokemon_moves(pokemon_name)
+        if "stats" in fields:
+            results[pokemon_name]["stats"] = get_pokemon_stats(pokemon_name)
+    
+    return results
+    
+
+if __name__ == "__main__":
+    print(get_pokemon_summary("bulbasaur"))
+    print(call_pokemon_api(["bulbasaur"], ["summary"]))
