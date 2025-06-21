@@ -65,8 +65,10 @@ def call_pokemon_api(pokemon_list, fields):
     Returns:
         dict: A dictionary containing the requested data for each Pokemon.
     """
+
     results = {}
     for pokemon_name in pokemon_list:
+        pokemon_name = pokemon_name.lower()
         results[pokemon_name] = {}
         if "name" in fields or "type" in fields or "summary" in fields:
             results[pokemon_name] = get_pokemon_summary(pokemon_name)
@@ -83,5 +85,4 @@ def call_pokemon_api(pokemon_list, fields):
     
 
 if __name__ == "__main__":
-    print(get_pokemon_summary("bulbasaur"))
-    print(call_pokemon_api(["bulbasaur"], ["summary"]))
+    print(call_pokemon_api(["charizard"], ["abilities"]))
